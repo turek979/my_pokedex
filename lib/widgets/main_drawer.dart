@@ -55,21 +55,21 @@ class MainDrawer extends StatelessWidget {
               onSelectScreen('pokedex');
             },
           ),
-          ListTile(
-            leading: Icon(
-              Icons.shield,
-              size: 26,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: Text(
-              'Movedex',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
-            ),
-            onTap: () {
-              onSelectScreen('movedex');
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(
+          //     Icons.shield,
+          //     size: 26,
+          //     color: Theme.of(context).colorScheme.onSurface,
+          //   ),
+          //   title: Text(
+          //     'Movedex',
+          //     style: Theme.of(context).textTheme.titleSmall!.copyWith(
+          //         color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+          //   ),
+          //   onTap: () {
+          //     onSelectScreen('movedex');
+          //   },
+          // ),
           Divider(
             thickness: 2,
             color: Theme.of(context).colorScheme.onSurface,

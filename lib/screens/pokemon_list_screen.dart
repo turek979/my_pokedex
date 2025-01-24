@@ -73,9 +73,18 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
+              maxLines: 1,
               onChanged: _handleSearch,
               decoration: InputDecoration(
                 hintText: 'Search Pokémon',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _searchQuery = '';
+                    });
+                  },
+                ),
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
