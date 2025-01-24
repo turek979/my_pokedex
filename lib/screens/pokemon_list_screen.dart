@@ -47,6 +47,13 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     }
   }
 
+  void _clearSearch() {
+    setState(() {
+      _searchQuery = '';
+      _isSearching = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final pokemonProvider = Provider.of<PokemonProvider>(context);
@@ -118,8 +125,11 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          PokemonDetailScreen(pokemon: pokemon),
+                                      builder: (context) => PokemonDetailScreen(
+                                        pokemon: pokemon,
+                                        searchQuery: _searchQuery,
+                                        onBack: _clearSearch,
+                                      ),
                                     ),
                                   );
                                 },

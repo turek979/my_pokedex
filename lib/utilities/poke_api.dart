@@ -8,6 +8,11 @@ Future<Pokemon> fetchPokemon(String name) async {
       await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$name'));
   if (response.statusCode == 200) {
     final json = jsonDecode(response.body);
+    final speciesResponse = await http.get(Uri.parse(json['species']['url']));
+    if (speciesResponse.statusCode == 200) {
+      final speciesJson = jsonDecode(speciesResponse.body);
+      json['flavor_text_entries'] = speciesJson['flavor_text_entries'];
+    }
     return Pokemon.fromJson(json);
   } else {
     throw Exception('Failed to load Pokémon');
