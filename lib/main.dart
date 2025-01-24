@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:my_pokedex/widgets/pokedex_list.dart';
+import 'package:my_pokedex/widgets/tabs_screen.dart';
 
 void main() {
   runApp(const Pokedex());
@@ -14,7 +14,7 @@ class Pokedex extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pokedex',
-      home: const PokedexList(),
+      home: const TabsScreen(),
     );
   }
 }
