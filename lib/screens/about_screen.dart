@@ -11,13 +11,14 @@ class AboutScreen extends StatelessWidget {
       'By using myPokedex, you confirm that you have read the Privacy Policy and have agreed to the Terms of Service. Read them by tapping below.';
   final String disclaimer =
       'myPokedex is an unofficial, free fan made app and is NOT affiliated, endorsed or supported by Nintendo, Game Freak or The Pokémon Company in any way. Some images used in this app are copyrighted and are supported under fair use. Pokémon and Pokémon character names are trademarks of Nintendo. No copyright infringement intended.';
-  final Uri _url = Uri.parse('https://flutter.dev');
+  final Uri _privacyUrl =
+      Uri.parse('https://datadex.talzz.com/legal/privacy-policy/');
+  final Uri _termsUrl =
+      Uri.parse('https://datadex.talzz.com/legal/terms-of-service/');
 
-  //TODO Launch urls for Prvacy and Terms
-
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 
@@ -87,7 +88,9 @@ class AboutScreen extends StatelessWidget {
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(150, 40),
                             ),
-                            onPressed: _launchUrl,
+                            onPressed: () {
+                              _launchUrl(_privacyUrl);
+                            },
                             child: Text('Privacy Policy'),
                           ),
                           SizedBox(width: 12),
@@ -95,7 +98,9 @@ class AboutScreen extends StatelessWidget {
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(150, 40),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              _launchUrl(_termsUrl);
+                            },
                             child: Text('Terms of Service'),
                           ),
                         ],
