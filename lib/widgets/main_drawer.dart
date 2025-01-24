@@ -60,6 +60,36 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
+              Icons.settings,
+              size: 26,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            title: Text(
+              'Setttings',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+            ),
+            onTap: () {
+              onSelectScreen('settings');
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.mail,
+              size: 26,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            title: Text(
+              'Help & Feedback',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+            ),
+            onTap: () {
+              onSelectScreen('help2');
+            },
+          ),
+          ListTile(
+            leading: Icon(
               Icons.info,
               size: 26,
               color: Theme.of(context).colorScheme.onSurface,
@@ -70,7 +100,7 @@ class MainDrawer extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
             ),
             onTap: () {
-              onSelectScreen('filters');
+              onSelectScreen('about');
             },
           ),
         ],

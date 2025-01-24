@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pokedex/screens/about_screen.dart';
+import 'package:my_pokedex/screens/not_found.dart';
 
 import 'package:my_pokedex/widgets/main_drawer.dart';
 
@@ -21,10 +22,28 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void _setScreen(String identifier) async {
     Navigator.pop(context);
-    if (identifier == 'filters') {
+    if (identifier == 'about') {
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const AboutScreen(),
+          builder: (context) => AboutScreen(),
+        ),
+      );
+    } else if (identifier == 'help') {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AboutScreen(),
+        ),
+      );
+    } else if (identifier == 'settings') {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AboutScreen(),
+        ),
+      );
+    } else {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => NotFound(),
         ),
       );
     }

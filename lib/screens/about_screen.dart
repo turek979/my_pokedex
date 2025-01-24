@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
+  AboutScreen({super.key});
 
   final double version = 1.0;
   final String legalNotice =
       'By using myPokedex, you confirm that you have read the Privacy Policy and have agreed to the Terms of Service. Read them by tapping below.';
   final String disclaimer =
       'myPokedex is an unofficial, free fan made app and is NOT affiliated, endorsed or supported by Nintendo, Game Freak or The Pokémon Company in any way. Some images used in this app are copyrighted and are supported under fair use. Pokémon and Pokémon character names are trademarks of Nintendo. No copyright infringement intended.';
+  final Uri _url = Uri.parse('https://flutter.dev');
+
+  //TODO Launch urls for Prvacy and Terms
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +92,7 @@ class AboutScreen extends StatelessWidget {
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(150, 40),
                             ),
-                            onPressed: () {},
+                            onPressed: _launchUrl,
                             child: Text('Privacy Policy'),
                           ),
                           SizedBox(width: 12),
