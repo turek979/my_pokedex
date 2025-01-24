@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:my_pokedex/models/pokemon_model.dart';
 
 // Fetch individual Pokémon details
-Future<Map<String, dynamic>> fetchPokemon(String name) async {
+Future<Pokemon> fetchPokemon(String name) async {
   final response =
       await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$name'));
   if (response.statusCode == 200) {
-    return jsonDecode(response.body);
+    final json = jsonDecode(response.body);
+    return Pokemon.fromJson(json);
   } else {
     throw Exception('Failed to load Pokémon');
   }

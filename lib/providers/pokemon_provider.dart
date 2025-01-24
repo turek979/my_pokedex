@@ -27,9 +27,12 @@ class PokemonProvider with ChangeNotifier {
           await Future.wait(response.map((pokemonJson) async {
         final details = await fetchPokemon(pokemonJson['name']);
         return Pokemon(
-          name: capitalizeFirstLetter(details['name']),
-          imageUrl: details['sprites']['front_default'] ?? '',
-          image2Url: details['sprites']['other']['home']['front_default'] ?? '',
+          name: capitalizeFirstLetter(details.name),
+          imageUrl: details.imageUrl,
+          image2Url: details.image2Url,
+          height: details.height,
+          weight: details.weight,
+          types: details.types,
         );
       }));
 
@@ -43,7 +46,7 @@ class PokemonProvider with ChangeNotifier {
     }
   }
 
-  /// Fetch more Pokémon for infinite scrolling
+  /// Fetch more Pokémon for pagination
   Future<void> fetchMorePokemon() async {
     if (_isFetchingMore) return;
 
@@ -57,9 +60,12 @@ class PokemonProvider with ChangeNotifier {
           await Future.wait(response.map((pokemonJson) async {
         final details = await fetchPokemon(pokemonJson['name']);
         return Pokemon(
-          name: capitalizeFirstLetter(details['name']),
-          imageUrl: details['sprites']['front_default'] ?? '',
-          image2Url: details['sprites']['other']['home']['front_default'] ?? '',
+          name: capitalizeFirstLetter(details.name),
+          imageUrl: details.imageUrl,
+          image2Url: details.image2Url,
+          height: details.height,
+          weight: details.weight,
+          types: details.types,
         );
       }));
 
@@ -73,37 +79,35 @@ class PokemonProvider with ChangeNotifier {
     }
   }
 
-  /// Fetch a specific Pokémon by name for search functionality
+  /// Search Pokémon by name
   Future<void> searchPokemonByName(String name) async {
-    if (_pokemonList
-        .any((pokemon) => pokemon.name.toLowerCase() == name.toLowerCase())) {
-      return; // Pokémon is already in the list
-    }
+    _isLoading = true;
+    notifyListeners();
 
     try {
-      _isFetchingMore = true;
-      notifyListeners();
-
-      final response = await fetchPokemon(name.toLowerCase());
+      final details = await fetchPokemon(name);
       final pokemon = Pokemon(
-        name: capitalizeFirstLetter(response['name']),
-        imageUrl: response['sprites']['front_default'] ?? '',
-        image2Url: response['sprites']['other']['home']['front_default'] ?? '',
+        name: capitalizeFirstLetter(details.name),
+        imageUrl: details.imageUrl,
+        image2Url: details.image2Url,
+        height: details.height,
+        weight: details.weight,
+        types: details.types,
       );
 
+      _pokemonList.clear();
       _pokemonList.add(pokemon);
     } catch (e) {
-      print('Error searching Pokémon: $e');
-      _errorMessage = 'Pokémon not found.';
+      _errorMessage = 'Failed to search Pokémon: $e';
     } finally {
-      _isFetchingMore = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
+}
 
-  /// Capitalize the first letter of a string
-  String capitalizeFirstLetter(String text) {
-    if (text.isEmpty) return text;
-    return text[0].toUpperCase() + text.substring(1);
-  }
+/// Capitalize the first letter of a string
+String capitalizeFirstLetter(String text) {
+  if (text.isEmpty) return text;
+  return text[0].toUpperCase() + text.substring(1);
 }

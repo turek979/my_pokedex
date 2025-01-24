@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:my_pokedex/models/pokemon_model.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
@@ -51,6 +50,21 @@ class PokemonDetailScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Height: ${pokemon.height / 10} m',
+              style: const TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Weight: ${pokemon.weight / 10} kg',
+              style: const TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Types: ${pokemon.types.join(', ')}',
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
             const SizedBox(height: 16),
             Expanded(
