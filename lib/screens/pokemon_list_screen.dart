@@ -22,20 +22,29 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     _pokemonProvider.fetchPokemonList(); // Fetch Pokémon on screen load
   }
 
-  Future<void> _handleSearch(String query) async {
+  void _handleSearch(String query) {
     setState(() {
       _searchQuery = query;
       _isSearching = true; // Start search
     });
 
-    if (!_pokemonProvider.pokemonList.any((pokemon) =>
-        pokemon.name.toLowerCase().contains(query.toLowerCase()))) {
-      await _pokemonProvider.searchPokemonByName(query);
-    }
+    // Filter Pokémon list based on search query
+    final filteredPokemonList = _pokemonProvider.pokemonList
+        .where((pokemon) =>
+            pokemon.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
 
-    setState(() {
-      _isSearching = false; // End search
-    });
+    if (filteredPokemonList.isEmpty) {
+      _pokemonProvider.searchPokemonByName(query).then((_) {
+        setState(() {
+          _isSearching = false; // End search
+        });
+      });
+    } else {
+      setState(() {
+        _isSearching = false; // End search
+      });
+    }
   }
 
   @override

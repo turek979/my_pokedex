@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:my_pokedex/models/pokemon_model.dart';
-import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
   final Pokemon pokemon;
@@ -11,8 +10,22 @@ class PokemonDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(text: pokemon.name, appBar: AppBar()),
-      body: Padding(
+      appBar: AppBar(
+        title: Text(
+          pokemon.name,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Colors.white,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.redAccent, Colors.orangeAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,21 +47,29 @@ class PokemonDetailScreen extends StatelessWidget {
               pokemon.name,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 16),
             Expanded(
               child: ListView(
                 children: [
-                  ListTile(
-                    title: const Text('Detail 1:'),
-                    subtitle: const Text('Example detail about this Pokémon.'),
+                  Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      title: const Text('Detail 1:'),
+                      subtitle:
+                          const Text('Example detail about this Pokémon.'),
+                    ),
                   ),
-                  ListTile(
-                    title: const Text('Detail 2:'),
-                    subtitle: const Text('Additional example detail.'),
+                  Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      title: const Text('Detail 2:'),
+                      subtitle: const Text('Additional example detail.'),
+                    ),
                   ),
                   // Add more details as needed.
                 ],
