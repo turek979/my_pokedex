@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:my_pokedex/models/pokemon_model.dart';
+import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
   final Pokemon pokemon;
@@ -10,9 +11,7 @@ class PokemonDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(pokemon.name),
-      ),
+      appBar: MyAppBar(text: pokemon.name, appBar: AppBar()),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

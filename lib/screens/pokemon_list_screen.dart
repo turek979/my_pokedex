@@ -98,18 +98,23 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                               );
                             }
                             final pokemon = filteredPokemonList[index];
-                            return ListTile(
-                              leading: Image.network(pokemon.imageUrl),
-                              title: Text(pokemon.name),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PokemonDetailScreen(pokemon: pokemon),
-                                  ),
-                                );
-                              },
+                            return SizedBox(
+                              child: ListTile(
+                                leading: Image.network(pokemon.imageUrl),
+                                title: Text(
+                                  pokemon.name,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PokemonDetailScreen(pokemon: pokemon),
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           },
                         ),

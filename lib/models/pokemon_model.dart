@@ -12,9 +12,9 @@ class Pokemon {
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     // Debug print
     // print('Mapping Pokémon: $json');
+    // print('Parsed Pokémon: name=${json['name']}, imageUrl=$imageUrl');
 
     final imageUrl = json['sprites']?['front_default'] ?? '';
-    // print('Parsed Pokémon: name=${json['name']}, imageUrl=$imageUrl');
 
     return Pokemon(
       name: capitalizeFirstLetter(json['name']),
