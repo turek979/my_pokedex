@@ -45,11 +45,11 @@ class _TabsScreenState extends State<TabsScreen> {
           builder: (context) => SettingsPage(),
         ),
       );
-    } else if (identifier == 'pokedex') {
-      activePageTitle = 'Pokedex';
-      _selectPage(0);
     } else if (identifier == 'movedex') {
       activePageTitle = 'Movedex';
+      _selectPage(0);
+    } else if (identifier == 'pokedex') {
+      activePageTitle = 'Pokedex';
       _selectPage(1);
     } else {
       await Navigator.of(context).push(

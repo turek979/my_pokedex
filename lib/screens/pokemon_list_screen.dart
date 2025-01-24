@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_pokedex/screens/pokemon_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:my_pokedex/providers/pokemon_provider.dart';
 
@@ -100,6 +101,15 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                             return ListTile(
                               leading: Image.network(pokemon.imageUrl),
                               title: Text(pokemon.name),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PokemonDetailScreen(pokemon: pokemon),
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),

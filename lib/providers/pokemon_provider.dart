@@ -3,7 +3,7 @@ import 'package:my_pokedex/models/pokemon_model.dart';
 import 'package:my_pokedex/utilities/poke_api.dart';
 
 class PokemonProvider with ChangeNotifier {
-  List<Pokemon> _pokemonList = [];
+  final List<Pokemon> _pokemonList = [];
   bool _isLoading = false;
   bool _isFetchingMore = false;
   String _errorMessage = '';

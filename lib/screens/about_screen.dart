@@ -131,6 +131,33 @@ class AboutScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 230, 230, 230),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Author',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 7),
+                      Text(
+                        'Jakub Turowski DSW49580',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: const Color.fromARGB(255, 82, 82, 82)),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ));
