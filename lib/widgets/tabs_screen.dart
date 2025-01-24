@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_pokedex/screens/about_screen.dart';
 
 import 'package:my_pokedex/widgets/main_drawer.dart';
 
@@ -18,15 +19,31 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  void _setScreen(String identifier) async {
+    Navigator.pop(context);
+    if (identifier == 'filters') {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const AboutScreen(),
+        ),
+      );
+    }
+  }
+
   String activePageTitle = 'Pokedex';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(activePageTitle),
+        title: Text(
+          activePageTitle,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
       ),
-      drawer: MainDrawer(),
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       body: Center(
         child: Text(
           'Działa',
