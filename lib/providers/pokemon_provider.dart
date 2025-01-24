@@ -29,6 +29,7 @@ class PokemonProvider with ChangeNotifier {
         return Pokemon(
           name: capitalizeFirstLetter(details['name']),
           imageUrl: details['sprites']['front_default'] ?? '',
+          image2Url: details['sprites']['other']['home']['front_default'] ?? '',
         );
       }));
 
@@ -58,6 +59,7 @@ class PokemonProvider with ChangeNotifier {
         return Pokemon(
           name: capitalizeFirstLetter(details['name']),
           imageUrl: details['sprites']['front_default'] ?? '',
+          image2Url: details['sprites']['other']['home']['front_default'] ?? '',
         );
       }));
 
@@ -86,6 +88,7 @@ class PokemonProvider with ChangeNotifier {
       final pokemon = Pokemon(
         name: capitalizeFirstLetter(response['name']),
         imageUrl: response['sprites']['front_default'] ?? '',
+        image2Url: response['sprites']['other']['home']['front_default'] ?? '',
       );
 
       _pokemonList.add(pokemon);

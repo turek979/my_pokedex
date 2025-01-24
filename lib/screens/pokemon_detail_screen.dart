@@ -19,7 +19,7 @@ class PokemonDetailScreen extends StatelessWidget {
           children: [
             Center(
               child: Image.network(
-                pokemon.imageUrl,
+                pokemon.image2Url,
                 height: 300,
                 fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) => const Icon(

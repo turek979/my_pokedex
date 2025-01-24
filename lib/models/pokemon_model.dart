@@ -6,8 +6,9 @@ String capitalizeFirstLetter(String name) {
 class Pokemon {
   final String name;
   final String imageUrl;
+  final String image2Url;
 
-  Pokemon({required this.name, required this.imageUrl});
+  Pokemon({required this.name, required this.imageUrl, required this.image2Url});
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     // Debug print
@@ -15,10 +16,13 @@ class Pokemon {
     // print('Parsed Pokémon: name=${json['name']}, imageUrl=$imageUrl');
 
     final imageUrl = json['sprites']?['front_default'] ?? '';
+    final image2Url =
+        json['sprites']?['other']?['home']?['front_default'] ?? '';
 
     return Pokemon(
       name: capitalizeFirstLetter(json['name']),
       imageUrl: imageUrl, // Handle missing image
+      image2Url: image2Url,
     );
   }
 }
