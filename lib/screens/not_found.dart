@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_pokedex/screens/about_screen.dart';
+import 'package:my_pokedex/screens/help_and_feedback.dart';
 
 class NotFound extends StatefulWidget {
   const NotFound({super.key});
@@ -13,7 +13,7 @@ class _NotFoundState extends State<NotFound> {
     Navigator.pop(context);
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AboutScreen(),
+        builder: (context) => HelpAndFeedbackScreen(),
       ),
     );
   }

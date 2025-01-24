@@ -85,7 +85,7 @@ class MainDrawer extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
             ),
             onTap: () {
-              onSelectScreen('help2');
+              onSelectScreen('help');
             },
           ),
           ListTile(
@@ -101,6 +101,21 @@ class MainDrawer extends StatelessWidget {
             ),
             onTap: () {
               onSelectScreen('about');
+            },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.error_outline,
+              size: 26,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            title: Text(
+              'error.debug',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+            ),
+            onTap: () {
+              onSelectScreen('error');
             },
           ),
         ],

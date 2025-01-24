@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pokedex/screens/about_screen.dart';
+import 'package:my_pokedex/screens/help_and_feedback.dart';
 import 'package:my_pokedex/screens/not_found.dart';
 
 import 'package:my_pokedex/widgets/main_drawer.dart';
@@ -31,7 +32,7 @@ class _TabsScreenState extends State<TabsScreen> {
     } else if (identifier == 'help') {
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AboutScreen(),
+          builder: (context) => HelpAndFeedbackScreen(),
         ),
       );
     } else if (identifier == 'settings') {
