@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class SettingsPage extends StatelessWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_pokedex/widgets/my_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class AboutScreen extends StatelessWidget {
   AboutScreen({super.key});
