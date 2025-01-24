@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_pokedex/screens/about_screen.dart';
 import 'package:my_pokedex/screens/help_and_feedback.dart';
+import 'package:my_pokedex/screens/movedex_screen.dart';
 import 'package:my_pokedex/screens/not_found.dart';
+import 'package:my_pokedex/screens/pokedex_screen.dart';
+import 'package:my_pokedex/screens/settings.dart';
 
 import 'package:my_pokedex/widgets/main_drawer.dart';
+import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -38,9 +42,15 @@ class _TabsScreenState extends State<TabsScreen> {
     } else if (identifier == 'settings') {
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AboutScreen(),
+          builder: (context) => SettingsPage(),
         ),
       );
+    } else if (identifier == 'pokedex') {
+      activePageTitle = 'Pokedex';
+      _selectPage(0);
+    } else if (identifier == 'movedex') {
+      activePageTitle = 'Movedex';
+      _selectPage(1);
     } else {
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -54,22 +64,16 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget activePage = PokedexScreen();
+
+    if (_selectedPageIndex == 1) {
+      activePage = MovedexScreen();
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          activePageTitle,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.red,
-      ),
+      appBar: MyAppBar(text: activePageTitle, appBar: AppBar()),
       drawer: MainDrawer(onSelectScreen: _setScreen),
-      body: Center(
-        child: Text(
-          'Działa',
-          style: TextStyle(color: Colors.black, fontSize: 20),
-        ),
-      ),
+      body: activePage,
     );
   }
 }

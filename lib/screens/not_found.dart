@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pokedex/screens/help_and_feedback.dart';
+import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class NotFound extends StatefulWidget {
   const NotFound({super.key});
@@ -21,9 +22,7 @@ class _NotFoundState extends State<NotFound> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('404 Not found'),
-      ),
+      appBar: MyAppBar(text: '404 Not Found', appBar: AppBar()),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

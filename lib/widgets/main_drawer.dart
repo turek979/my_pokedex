@@ -10,53 +10,69 @@ class MainDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          DrawerHeader(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primaryContainer,
-                  Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withValues(alpha: 0.8)
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          SizedBox(
+            height: 130,
+            child: DrawerHeader(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.red, Colors.red.withValues(alpha: 0.8)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.fastfood,
-                  size: 48,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 18),
-                Text(
-                  'Cooking up!',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.primary),
-                ),
-              ],
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.catching_pokemon,
+                    size: 48,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: 18),
+                  Text(
+                    "Gotta Catch'em all!",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
           ListTile(
             leading: Icon(
-              Icons.restaurant,
+              Icons.catching_pokemon_sharp,
               size: 26,
               color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
-              'Meals',
+              'Pokedex',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
             ),
             onTap: () {
-              onSelectScreen('meals');
+              onSelectScreen('pokedex');
             },
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.shield,
+              size: 26,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            title: Text(
+              'Movedex',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface, fontSize: 24),
+            ),
+            onTap: () {
+              onSelectScreen('movedex');
+            },
+          ),
+          Divider(
+            thickness: 2,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
           ListTile(
             leading: Icon(

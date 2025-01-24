@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pokedex/widgets/faq_item.dart';
+import 'package:my_pokedex/widgets/my_app_bar.dart';
 
 class HelpAndFeedbackScreen extends StatelessWidget {
   const HelpAndFeedbackScreen({super.key});
@@ -7,14 +8,7 @@ class HelpAndFeedbackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.red,
-        title: Text(
-          'Help & Feedback',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: MyAppBar(text: 'Help & Feedback', appBar: AppBar()),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

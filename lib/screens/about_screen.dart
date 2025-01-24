@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_pokedex/widgets/my_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -22,14 +23,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'About',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.red,
-        ),
+        appBar: MyAppBar(text: 'About', appBar: AppBar()),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
