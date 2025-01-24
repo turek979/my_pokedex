@@ -11,6 +11,7 @@ class PokemonListScreen extends StatefulWidget {
 
 class _PokemonListScreenState extends State<PokemonListScreen> {
   String _searchQuery = ''; // Current search query
+  bool _isSearching = false; // To track ongoing search
   late PokemonProvider _pokemonProvider;
 
   @override
@@ -18,6 +19,22 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     super.initState();
     _pokemonProvider = Provider.of<PokemonProvider>(context, listen: false);
     _pokemonProvider.fetchPokemonList(); // Fetch Pokémon on screen load
+  }
+
+  Future<void> _handleSearch(String query) async {
+    setState(() {
+      _searchQuery = query;
+      _isSearching = true; // Start search
+    });
+
+    if (!_pokemonProvider.pokemonList.any((pokemon) =>
+        pokemon.name.toLowerCase().contains(query.toLowerCase()))) {
+      await _pokemonProvider.searchPokemonByName(query);
+    }
+
+    setState(() {
+      _isSearching = false; // End search
+    });
   }
 
   @override
@@ -39,11 +56,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-              },
+              onChanged: _handleSearch,
               decoration: InputDecoration(
                 hintText: 'Search Pokémon',
                 prefixIcon: const Icon(Icons.search),
@@ -67,27 +80,29 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                 }
                 return true;
               },
-              child: filteredPokemonList.isEmpty
-                  ? const Center(
-                      child: Text('No Pokémon found matching your search.'),
-                    )
-                  : ListView.builder(
-                      itemCount: filteredPokemonList.length +
-                          (pokemonProvider.isFetchingMore ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index == filteredPokemonList.length &&
-                            pokemonProvider.isFetchingMore) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        final pokemon = filteredPokemonList[index];
-                        return ListTile(
-                          leading: Image.network(pokemon.imageUrl),
-                          title: Text(pokemon.name),
-                        );
-                      },
-                    ),
+              child: _isSearching
+                  ? const Center(child: CircularProgressIndicator())
+                  : filteredPokemonList.isEmpty
+                      ? const Center(
+                          child: Text('No Pokémon found matching your search.'),
+                        )
+                      : ListView.builder(
+                          itemCount: filteredPokemonList.length +
+                              (pokemonProvider.isFetchingMore ? 1 : 0),
+                          itemBuilder: (context, index) {
+                            if (index == filteredPokemonList.length &&
+                                pokemonProvider.isFetchingMore) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            final pokemon = filteredPokemonList[index];
+                            return ListTile(
+                              leading: Image.network(pokemon.imageUrl),
+                              title: Text(pokemon.name),
+                            );
+                          },
+                        ),
             ),
     );
   }

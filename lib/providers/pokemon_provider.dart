@@ -1,111 +1,106 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:my_pokedex/models/pokemon_model.dart';
 import 'package:my_pokedex/utilities/poke_api.dart';
 
 class PokemonProvider with ChangeNotifier {
   List<Pokemon> _pokemonList = [];
-  int _offset = 0; // Track the current offset for pagination
-  final int _limit = 50; // Number of Pokémon to fetch per page
-  bool _isLoading = false; // Track if the initial loading is in progress
-  bool _isFetchingMore = false; // Track if more data is being fetched
-  String? _errorMessage; // Store error messages if any
+  bool _isLoading = false;
+  bool _isFetchingMore = false;
+  String _errorMessage = '';
+  int _offset = 0;
+  final int _limit = 20;
 
   List<Pokemon> get pokemonList => _pokemonList;
   bool get isLoading => _isLoading;
   bool get isFetchingMore => _isFetchingMore;
-  String? get errorMessage => _errorMessage;
+  String get errorMessage => _errorMessage;
 
-  /// Fetch the initial Pokémon list or refresh the list
+  /// Fetch the initial list of Pokémon
   Future<void> fetchPokemonList() async {
     _isLoading = true;
-    _errorMessage = null;
     notifyListeners();
 
     try {
       final response =
           await fetchPokemonListFromApi(limit: _limit, offset: _offset);
+      final fetchedPokemon =
+          await Future.wait(response.map((pokemonJson) async {
+        final details = await fetchPokemon(pokemonJson['name']);
+        return Pokemon(
+          name: capitalizeFirstLetter(details['name']),
+          imageUrl: details['sprites']['front_default'] ?? '',
+        );
+      }));
+
+      _pokemonList.addAll(fetchedPokemon);
       _offset += _limit;
-
-      final futures = response.map((item) async {
-        try {
-          final detailResponse = await http.get(Uri.parse(item['url']));
-          if (detailResponse.statusCode == 200) {
-            final details = jsonDecode(detailResponse.body);
-            return Pokemon(
-              name: capitalizeFirstLetter(details['name']),
-              imageUrl: details['sprites']['front_default'] ?? '',
-            );
-          } else {
-            print('Failed to fetch details for ${item['name']}');
-            return null;
-          }
-        } catch (e) {
-          print('Error fetching details for ${item['name']}: $e');
-          return null;
-        }
-      });
-
-      _pokemonList = (await Future.wait(futures))
-          .whereType<Pokemon>() // Filter out null values
-          .toList();
     } catch (e) {
-      _errorMessage = 'Failed to load Pokémon list. Please try again later.';
-      print('Error fetching Pokémon list: $e');
+      _errorMessage = 'Failed to fetch Pokémon list: $e';
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  /// Fetch more Pokémon for pagination
+  /// Fetch more Pokémon for infinite scrolling
   Future<void> fetchMorePokemon() async {
-    if (_isFetchingMore) return; // Prevent duplicate calls
+    if (_isFetchingMore) return;
+
     _isFetchingMore = true;
-    _errorMessage = null;
     notifyListeners();
 
     try {
       final response =
           await fetchPokemonListFromApi(limit: _limit, offset: _offset);
-      _offset += _limit;
+      final fetchedPokemon =
+          await Future.wait(response.map((pokemonJson) async {
+        final details = await fetchPokemon(pokemonJson['name']);
+        return Pokemon(
+          name: capitalizeFirstLetter(details['name']),
+          imageUrl: details['sprites']['front_default'] ?? '',
+        );
+      }));
 
-      final futures = response.map((item) async {
-        try {
-          final detailResponse = await http.get(Uri.parse(item['url']));
-          if (detailResponse.statusCode == 200) {
-            final details = jsonDecode(detailResponse.body);
-            return Pokemon(
-              name: capitalizeFirstLetter(details['name']),
-              imageUrl: details['sprites']['front_default'] ?? '',
-            );
-          } else {
-            print('Failed to fetch details for ${item['name']}');
-            return null;
-          }
-        } catch (e) {
-          print('Error fetching details for ${item['name']}: $e');
-          return null;
-        }
-      });
-
-      final fetchedPokemon = (await Future.wait(futures))
-          .whereType<Pokemon>() // Filter out null values
-          .toList();
       _pokemonList.addAll(fetchedPokemon);
+      _offset += _limit;
     } catch (e) {
-      _errorMessage = 'Failed to load more Pokémon. Please try again later.';
-      print('Error fetching more Pokémon: $e');
+      _errorMessage = 'Failed to fetch more Pokémon: $e';
     } finally {
       _isFetchingMore = false;
       notifyListeners();
     }
   }
-}
 
-/// Helper function to capitalize the first letter of a string
-String capitalizeFirstLetter(String input) {
-  if (input.isEmpty) return input;
-  return input[0].toUpperCase() + input.substring(1);
+  /// Fetch a specific Pokémon by name for search functionality
+  Future<void> searchPokemonByName(String name) async {
+    if (_pokemonList
+        .any((pokemon) => pokemon.name.toLowerCase() == name.toLowerCase())) {
+      return; // Pokémon is already in the list
+    }
+
+    try {
+      _isFetchingMore = true;
+      notifyListeners();
+
+      final response = await fetchPokemon(name.toLowerCase());
+      final pokemon = Pokemon(
+        name: capitalizeFirstLetter(response['name']),
+        imageUrl: response['sprites']['front_default'] ?? '',
+      );
+
+      _pokemonList.add(pokemon);
+    } catch (e) {
+      print('Error searching Pokémon: $e');
+      _errorMessage = 'Pokémon not found.';
+    } finally {
+      _isFetchingMore = false;
+      notifyListeners();
+    }
+  }
+
+  /// Capitalize the first letter of a string
+  String capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1);
+  }
 }
