@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_pokedex/screens/about_screen.dart';
 import 'package:my_pokedex/screens/help_and_feedback.dart';
-import 'package:my_pokedex/screens/movedex_screen.dart';
+import 'package:my_pokedex/screens/pokemon_list_screen.dart';
 import 'package:my_pokedex/screens/not_found.dart';
 import 'package:my_pokedex/screens/pokedex_screen.dart';
 import 'package:my_pokedex/screens/settings.dart';
-
 import 'package:my_pokedex/widgets/main_drawer.dart';
 import 'package:my_pokedex/widgets/my_app_bar.dart';
 
@@ -67,7 +66,7 @@ class _TabsScreenState extends State<TabsScreen> {
     Widget activePage = PokedexScreen();
 
     if (_selectedPageIndex == 1) {
-      activePage = MovedexScreen();
+      activePage = PokemonListScreen();
     }
 
     return Scaffold(
