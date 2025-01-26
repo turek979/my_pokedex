@@ -14,6 +14,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
   String _searchQuery = ''; // Current search query
   bool _isSearching = false; // To track ongoing search
   late PokemonProvider _pokemonProvider;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -51,7 +52,9 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     setState(() {
       _searchQuery = '';
       _isSearching = false;
+      _searchController.clear();
     });
+    _pokemonProvider.fetchPokemonList(); // Reload the list
   }
 
   @override
@@ -73,17 +76,14 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
+              controller: _searchController,
               maxLines: 1,
               onChanged: _handleSearch,
               decoration: InputDecoration(
                 hintText: 'Search Pokémon',
                 suffixIcon: IconButton(
                   icon: Icon(Icons.clear),
-                  onPressed: () {
-                    setState(() {
-                      _searchQuery = '';
-                    });
-                  },
+                  onPressed: _clearSearch,
                 ),
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
